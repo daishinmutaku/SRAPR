@@ -16,7 +16,7 @@ s = 10
 
 # 説明変数ベクトルと目的変数の作成
 σ = 2
-tmp = outer(1:d, 1:d, -)
+tmp = MyFunc.outer(1:d, 1:d, -)
 Σ = 0.5 .^ abs.(tmp)
 x = rand(MvNormal(zeros(d), Σ), n)
 x = MyFunc.scale(x)'
@@ -25,11 +25,11 @@ y = y .- mean(y)
 
 ## 情報量規準によるモデル選択
 fit = glmnet(x, y)
+fitNulldev = sum([(y_i - mean(y))^2 for y_i in y])
 fitDf = [count(beta -> !iszero(beta), fit.betas[:, i]) for i in 1:size(fit.betas)[2]]
-cp = (1 .- fit.dev_ratio) * fit.null_dev / n .+ 2 * σ^2 / n * fitDf
+cp = (1 .- fit.dev_ratio) * fitNulldev / n .+ 2 * σ^2 / n * fitDf
 
 ## 結果のプロット
 λ = fit.lambda
-plt = plot()
-plot!(log.(λ), cp)
-plt
+plot(log.(λ), cp)
+

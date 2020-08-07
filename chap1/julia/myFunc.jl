@@ -8,7 +8,7 @@ module MyFunc
     scaledData = zeros((size(data)[1], size(data)[2]))
     for i in 1:size(data)[2]
       row = data[:, i]
-      scaledData[:, i] = row .- mean(row) / std(row)
+      scaledData[:, i] = (row .- mean(row)) / std(row)
     end
     scaledData
   end

@@ -21,7 +21,7 @@ s = Int(d/2)
 # 説明変数ベクトルの平均と共分散行列の作成
 m = zeros(d)
 
-tmp = outer(1:d, 1:d, -)
+tmp = MyFunc.outer(1:d, 1:d, -)
 Σ = ρ .^ abs.(tmp)
 
 x = rand(MvNormal(m, Σ), n)

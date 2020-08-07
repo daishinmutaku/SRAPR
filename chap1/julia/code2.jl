@@ -20,10 +20,12 @@ plt = plot()
 for i in 1:size(lasso.betas)[1]
   plot!(log.(lasso.lambda), lasso.betas[i, :], legend=nothing)
 end
-savefig("ラッソの解パス.pdf")
+plt
+## 
 plt = plot()
 for i in 1:size(ridge.betas)[1]
   plot!(log.(ridge.lambda), ridge.betas[i, :], legend=nothing)
 end
-savefig("リッジ回帰の解パス.pdf")
+plt
+##
 

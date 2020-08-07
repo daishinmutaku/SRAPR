@@ -14,10 +14,9 @@ data = select!(CSV.read("slump.csv", header=true), Not(1))
 
 ## 説明変数ベクトルと目的変数の作成
 x = Matrix(data[:, 1:7])
-x = scale(x)
+x = MyFunc.scale(x)
 y = data[Symbol("FLOW(cm)")]
 y = y .- mean(y)
-x, y
 
 ## 10分割交差検証法によるCV誤差のプロット
 cvLasso = glmnetcv(x, y)
@@ -31,5 +30,5 @@ savefig("10分割交差検証法のCV誤差.pdf")
 glmnet(x, y, lambda=[λMin]).betas
 
 # 1標準誤差基準によるλを用いた場合
-λ1Se = cul1se(cvLasso)
+λ1Se = MyFunc.cul1se(cvLasso)
 glmnet(x, y, lambda=[λ1Se]).betas
