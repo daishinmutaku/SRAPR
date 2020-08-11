@@ -1,6 +1,8 @@
 using Statistics
 using LinearAlgebra
-using PrettyTables
+
+include("myFunc.jl")
+using .MyFunc
 
 ## 事前確率を設定
 π1 = 1/3
@@ -43,31 +45,13 @@ end
 
 ## 教師データに対する判別結果
 ldaTrain = LDA(Matrix(wineTrain[:, 2:3])) # 教師データを判別
-function printTable(correct::Vector{Int}, discrimination::Vector{Int})
-    table = zeros((3, 3))
-    for i in 1:size(correct)[1]
-        c = correct[i]
-        d = discrimination[i]
-        table[c, d] += 1
-    end
-    pretty_table(table)
-end
-printTable(Vector(wineTrain[:, 1]), ldaTrain) # 正誤表
+MyFunc.printTable(Vector(wineTrain[:, 1]), ldaTrain) # 正誤表
 ldaErrTrain = mean(wineTrain[:, 1] .!= ldaTrain) # 誤判別確率
 print(ldaErrTrain)
 
 ## テストデータに対する判別結果
 ldaTest = LDA(Matrix(wineTest[:, 2:3])) # テストデータを判別
-function printTable(correct::Vector{Int}, discrimination::Vector{Int})
-    table = zeros((3, 3))
-    for i in 1:size(correct)[1]
-        c = correct[i]
-        d = discrimination[i]
-        table[c, d] += 1
-    end
-    pretty_table(table)
-end
-printTable(Vector(wineTest[:, 1]), ldaTest) # 正誤表
+MyFunc.printTable(Vector(wineTest[:, 1]), ldaTest) # 正誤表
 ldaErrTest = mean(wineTest[:, 1] .!= ldaTest) # 誤判別確率
 print(ldaErrTest)
 
