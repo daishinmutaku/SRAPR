@@ -9,7 +9,7 @@ model %>% compile(
 history = model %>% fit(
     x_train, 
     y_train,
-    epochs = 30,
+    epochs = 1,
     batch_size = 1,
     validation_data = list(x_test, y_test)
 )
